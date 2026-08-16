@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubh Garg</title>
+<meta name="description" content="Shubh Garg — Electrical Engineering undergrad at VJTI, Mumbai. Computer vision, explainable ML, and deterministic software.">
+<meta property="og:title" content="Shubh Garg">
+<meta property="og:description" content="EE undergrad @ VJTI · Computer Vision · Explainable ML · Open to internships">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Bangers&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-base: #0B1026;
+    --bg-gradient: radial-gradient(circle at 50% 0%, #1A2354 0%, #0B1026 70%);
+    --ink: #E2E8F0;
+    --ink-dark: #050814;
+    --paper: #151B3B;
+    --paper-dark: #0D122C;
+    --fire-orange: #FF5E3A;
+    --fire-yellow: #FFB224;
+    --fire-cyan: #4CC9F0;
+    --fire-magenta: #B565A7;
+    --poppy: var(--fire-orange);
+    --mustard: var(--fire-yellow);
+    --teal: var(--fire-cyan);
+    --blue: var(--fire-magenta);
+    --noise-opacity: 0.06;
+    --scanline-opacity: 0.15;
+    --glow-spread: 12px;
+  }
+  [data-theme="day"] {
+    --bg-base: #F6EFDF;
+    --bg-gradient: radial-gradient(circle at 50% 0%, #FFF9EB 0%, #F6EFDF 70%);
+    --ink: #1C1B22;
+    --ink-dark: #1C1B22;
+    --paper: #FFFFFF;
+    --paper-dark: #E7DCC3;
+    --poppy: #E5484D;
+    --mustard: #FFB224;
+    --teal: #2F9E8F;
+    --blue: #4F6DF5;
+    --noise-opacity: 0.03;
+    --scanline-opacity: 0.05;
+    --glow-spread: 0px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
+  body {
+    font-family: 'Space Grotesk', sans-serif; color: var(--ink); background: var(--bg-base);
+    background-image: var(--bg-gradient); line-height: 1.6; overflow-x: hidden; min-height: 100vh;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 998; opacity: var(--noise-opacity);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 999;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,var(--scanline-opacity)) 0 1px, transparent 1px 4px);
+  }
+  ::selection { background: var(--mustard); color: var(--ink-dark); }
+  img { image-rendering: pixelated; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+
+  .pixel {
+    clip-path: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
+  }
+  .drop { filter: drop-shadow(8px 8px 0 var(--ink-dark)); }
+  .glow-fire { box-shadow: 0 0 var(--glow-spread) var(--fire-orange), 8px 8px 0 var(--ink-dark); }
+  .glow-cyan { box-shadow: 0 0 var(--glow-spread) var(--fire-cyan), 8px 8px 0 var(--ink-dark); }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
+
+  .ticker { background: var(--ink-dark); color: var(--ink); overflow: hidden; border-bottom: 4px solid var(--ink-dark); }
+  .ticker-track { display: flex; width: max-content; animation: scroll 22s linear infinite; }
+  .ticker span { font-family: 'Press Start 2P'; font-size: 10px; padding: 10px 0; white-space: nowrap; }
+  .ticker b { color: var(--mustard); } .ticker i { color: var(--poppy); font-style: normal; }
+  @keyframes scroll { to { transform: translateX(-50%); } }
+
+  nav { position: sticky; top: 0; z-index: 50; background: var(--paper); border-bottom: 4px solid var(--ink-dark); backdrop-filter: blur(4px); }
+  .nav-in { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 20px; flex-wrap: wrap; }
+  .logo { font-family: 'Press Start 2P'; font-size: 13px; }
+  .logo em { color: var(--poppy); font-style: normal; }
+  .nav-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .nav-links { display: flex; gap: 8px; flex-wrap: wrap; }
+  .nav-links a, .theme-toggle {
+    font-family: 'Press Start 2P'; font-size: 9px; padding: 9px 12px; border: 3px solid var(--ink-dark);
+    background: var(--paper); box-shadow: 4px 4px 0 var(--ink-dark); cursor: pointer; color: var(--ink);
+    transition: transform .08s, box-shadow .08s, background .08s;
+  }
+  .nav-links a:hover, .theme-toggle:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink-dark); background: var(--mustard); color: var(--ink-dark); }
+  .theme-toggle { display: flex; align-items: center; gap: 6px; }
+
+  .hero { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 48px; align-items: center; padding: 72px 0 56px; }
+  .avatar-box { position: relative; }
+  .frame { background: var(--ink-dark); padding: 8px; }
+  .frame img { display: block; width: 100%; }
+  .pow { position: absolute; top: -26px; right: -18px; transform: rotate(8deg); background: var(--poppy); color: #fff; font-family: 'Bangers'; font-size: 26px; letter-spacing: 2px; padding: 8px 16px; border: 4px solid var(--ink-dark); box-shadow: 5px 5px 0 var(--ink-dark); }
+  .bubble { position: relative; display: inline-block; background: var(--paper); border: 4px solid var(--ink-dark); padding: 10px 18px; font-family: 'Bangers'; font-size: 22px; letter-spacing: 1.5px; margin-bottom: 20px; box-shadow: 5px 5px 0 var(--ink-dark); }
+  .bubble::after { content: ""; position: absolute; left: 34px; bottom: -22px; width: 10px; height: 10px; background: var(--ink-dark); box-shadow: 10px -10px 0 var(--ink-dark), 10px 0 0 var(--ink-dark); }
+  h1 { font-family: 'Press Start 2P'; font-size: clamp(22px, 4.2vw, 42px); line-height: 1.35; margin: 14px 0 10px; text-shadow: 4px 4px 0 var(--ink-dark); }
+  h1 .red { color: var(--poppy); } h1 .teal { color: var(--teal); }
+  .fnote { font-family: 'Press Start 2P'; font-size: 9px; color: var(--poppy); margin: 0 0 16px; }
+  .type-line { font-family: 'Press Start 2P'; font-size: clamp(9px, 1.4vw, 12px); color: var(--teal); min-height: 2.4em; text-shadow: 0 0 8px var(--teal); }
+  .cursor { display: inline-block; background: var(--poppy); width: .6em; height: 1em; vertical-align: -2px; animation: blink 1s steps(1) infinite; box-shadow: 0 0 8px var(--poppy); }
+  @keyframes blink { 50% { opacity: 0; } }
+  .hero p.bio { margin: 14px 0 26px; max-width: 58ch; font-size: 17px; }
+  .btn-row { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn { font-family: 'Press Start 2P'; font-size: 10px; padding: 14px 18px; border: 3px solid var(--ink-dark); box-shadow: 5px 5px 0 var(--ink-dark); transition: transform .08s, box-shadow .08s; display: inline-block; cursor: pointer; color: var(--ink-dark); }
+  .btn:hover { transform: translate(2px, 2px); box-shadow: 3px 3px 0 var(--ink-dark); }
+  .btn:active { transform: translate(5px, 5px); box-shadow: 0 0 0 var(--ink-dark); }
+  .btn-mustard { background: var(--mustard); } .btn-teal { background: var(--teal); color: #fff; }
+  .btn-red { background: var(--poppy); color: #fff; } .btn-paper { background: var(--paper); color: var(--ink); }
+
+  .issue { display: flex; align-items: center; gap: 16px; margin: 72px 0 32px; }
+  .issue-tag { font-family: 'Bangers'; font-size: 20px; letter-spacing: 2px; background: var(--ink-dark); color: var(--mustard); padding: 6px 14px; transform: rotate(-2deg); box-shadow: 4px 4px 0 var(--poppy); }
+  .issue h2 { font-family: 'Press Start 2P'; font-size: clamp(16px, 2.6vw, 26px); text-shadow: 3px 3px 0 var(--ink-dark); }
+
+  .panel { background: var(--paper); border: 4px solid var(--ink-dark); }
+  .panel-in { padding: 32px; }
+  .strip { font-family: 'Press Start 2P'; font-size: 11px; padding: 12px 18px; border-bottom: 4px solid var(--ink-dark); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: #fff; }
+  .strip-red { background: var(--poppy); } .strip-teal { background: var(--teal); }
+  .strip-mustard { background: var(--mustard); color: var(--ink-dark); } .strip-blue { background: var(--blue); }
+
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 26px; }
+  .fact { border: 3px solid var(--ink-dark); background: var(--bg-base); padding: 16px; box-shadow: 5px 5px 0 var(--ink-dark); }
+  .fact b { font-family: 'Press Start 2P'; font-size: 9px; display: block; margin-bottom: 8px; color: var(--poppy); }
+
+  .proj ul, .blog ul { margin: 14px 0 0 20px; } .proj li, .blog li { margin-bottom: 8px; }
+  .tags { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+  .tag { font-family: 'Press Start 2P'; font-size: 8px; padding: 7px 10px; border: 3px solid var(--ink-dark); background: var(--mustard); color: var(--ink-dark); }
+  .tag.t2 { background: var(--teal); color: #fff; } .tag.t3 { background: var(--paper); color: var(--ink); } .tag.t4 { background: var(--poppy); color: #fff; }
+
+  .blog-post { border-bottom: 2px dashed var(--ink-dark); padding-bottom: 20px; margin-bottom: 20px; }
+  .blog-post:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .blog-date { font-family: 'Press Start 2P'; font-size: 8px; color: var(--teal); margin-bottom: 8px; display: block; }
+  .blog-title { font-family: 'Bangers'; font-size: 24px; letter-spacing: 1px; margin-bottom: 10px; color: var(--poppy); }
+
+  .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+  .skill-box { border: 4px solid var(--ink-dark); background: var(--bg-base); box-shadow: 6px 6px 0 var(--ink-dark); }
+  .skill-box h3 { font-family: 'Press Start 2P'; font-size: 10px; padding: 12px 14px; border-bottom: 4px solid var(--ink-dark); color: #fff; }
+  .sb-red h3 { background: var(--poppy); } .sb-teal h3 { background: var(--teal); }
+  .sb-mus h3 { background: var(--mustard); color: var(--ink-dark); } .sb-blu h3 { background: var(--blue); }
+  .skill-box .tags { margin: 16px 14px; }
+
+  .contact { background: var(--poppy); color: #fff; text-align: center; border-color: var(--ink-dark); }
+  .contact .panel-in { padding: 56px 28px; }
+  .contact h2 { font-family: 'Bangers'; font-size: clamp(34px, 6vw, 60px); letter-spacing: 3px; text-shadow: 4px 4px 0 var(--ink-dark); color: #fff; margin-bottom: 10px; }
+  .contact p { margin: 14px auto 30px; max-width: 52ch; }
+
+  footer { background: var(--ink-dark); color: var(--ink); text-align: center; padding: 34px 20px; margin-top: 80px; border-top: 4px solid var(--ink-dark); }
+  footer .press { font-family: 'Press Start 2P'; font-size: 10px; color: var(--mustard); }
+  footer small { display: block; margin-top: 14px; font-size: 12px; opacity: .75; }
+
+  .reveal { opacity: 0; transform: translateY(22px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
+
+  @media (max-width: 820px) {
+    .hero { grid-template-columns: 1fr; gap: 40px; padding-top: 56px; }
+    .avatar-box { max-width: 300px; margin: 0 auto; }
+    .nav-controls { width: 100%; justify-content: space-between; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ticker" aria-hidden="true"><div class="ticker-track">
+  <span>&nbsp;⚡ <b>SHUBH GARG</b> ⚡ VJTI ELECTRICAL ENGINEERING <i>★</i> COMPUTER VISION <i>★</i> EXPLAINABLE ML <i>★</i> OPEN TO INTERNSHIPS <i>★</i>&nbsp;</span>
+  <span>&nbsp;⚡ <b>SHUBH GARG</b> ⚡ VJTI ELECTRICAL ENGINEERING <i>★</i> COMPUTER VISION <i>★</i> EXPLAINABLE ML <i>★</i> OPEN TO INTERNSHIPS <i>★</i>&nbsp;</span>
+</div></div>
+
+<nav><div class="nav-in wrap">
+  <a class="logo" href="#top">SHUBH<em>.EXE</em></a>
+  <div class="nav-controls">
+    <div class="nav-links">
+      <a href="#about">ABOUT</a><a href="#projects">PROJECTS</a>
+      <a href="#xp">XP</a><a href="#devlog">DEVLOG</a><a href="#contact">CONTACT</a>
+    </div>
+    <button class="theme-toggle" id="theme-btn" aria-label="Toggle Day/Night Mode">
+      <span id="theme-icon">☀️</span> <span id="theme-text">DAY</span>
+    </button>
+  </div>
+</div></nav>
+
+<main class="wrap" id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="avatar-box drop">
+      <div class="frame pixel glow-cyan"><img src="avatar.png" alt="Pixel-art portrait of Shubh Garg"></div>
+      <div class="pow glow-fire">HI!</div>
+    </div>
+    <div>
+      <div class="bubble">HI, I'M SHUBH — WELCOME TO MY PANEL!</div>
+      <h1>SHUBH <span class="red">GARG</span><br><span class="teal">BUILDS*</span> COOL THINGS</h1>
+      <div class="fnote">*tries to.</div>
+      <div class="type-line">&gt; <span id="typed"></span><span class="cursor"></span></div>
+      <p class="bio">Electrical Engineering undergrad at <b>VJTI, Mumbai</b>, working the gap between physical
+      systems and software — teaching computers to re-locate microscopic wafer sites inside semiconductor
+      tools, and fusing hand-written maintenance logs with sensor telemetry so machines don't fail quietly.
+      I care about deterministic code, explainable models, and interfaces engineers can actually trust.</p>
+      <div class="btn-row">
+        <a class="btn btn-mustard glow-fire" href="https://github.com/DoctorDisco23" target="_blank">GITHUB</a>
+        <a class="btn btn-teal glow-cyan" href="https://www.linkedin.com/in/shubh-garg-85a089318/" target="_blank">LINKEDIN</a>
+        <a class="btn btn-red" href="mailto:gargshubh2373@gmail.com">EMAIL ME</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <header class="issue" id="about"><span class="issue-tag">ISSUE #01</span><h2>ABOUT ME</h2></header>
+  <div class="drop reveal"><div class="panel pixel"><div class="panel-in">
+    <p>I'm a third-year B.Tech Electrical Engineering student who got a little too curious about what happens
+    when electrons meet algorithms. My happy place is taking messy, physical-world problems — drifting wafer
+    stages, degrading ship engines — and turning them into clean, deterministic software. Off the clock: quiet
+    chess games and pickup basketball — strictly background characters in this story.</p>
+    <div class="facts">
+      <div class="fact"><b>BASE</b>Mumbai, India 🇮</div>
+      <div class="fact"><b>GUILD</b>VJTI · EE '28</div>
+      <div class="fact"><b>CLASS</b>Computer Vision + Signal Processing</div>
+      <div class="fact"><b>THIS SEM</b>PSA · Power Electronics · MPMC · Control Systems</div>
+    </div>
+  </div></div></div>
+
+  <!-- ============ PROJECTS ============ -->
+  <header class="issue" id="projects"><span class="issue-tag">ISSUE #02</span><h2>PROJECTS</h2></header>
+
+  <div class="drop reveal"><div class="panel pixel proj glow-fire">
+    <div class="strip strip-red"><span>★ FEATURED — DRIFT-SENSE</span><span>WAFER INSPECTION CV</span></div>
+    <div class="panel-in">
+      <p>A deterministic, <b>zero-shot computer-vision engine</b> that re-locates microscopic wafer sites with
+      <b>sub-pixel precision</b> — even inside highly periodic semiconductor layouts where classical template matching fails.</p>
+      <ul>
+        <li>Multi-scale <b>Normalized Cross-Correlation</b> + periodicity-aware re-verification for DRAM/FinFET grids.</li>
+        <li><b>ORB + RANSAC</b> geometric fallback and 2D quadratic-surface sub-pixel refinement.</li>
+        <li>No training data, no GPU — pure signal processing, fully reproducible (<code>seed(42)</code>).</li>
+      </ul>
+      <div class="tags"><span class="tag">PYTHON</span><span class="tag t2">OPENCV</span><span class="tag t3">NUMPY</span><span class="tag t4">ZERO-SHOT</span></div>
+      <div class="btn-row">
+        <a class="btn btn-mustard" href="https://github.com/DoctorDisco23/drift-sense" target="_blank">SOURCE CODE</a>
+        <a class="btn btn-paper" href="https://doctordisco23.github.io/drift-sense/" target="_blank">LIVE DOCS</a>
+      </div>
+    </div>
+  </div></div>
+
+  <div style="height:32px"></div>
+
+  <div class="drop reveal"><div class="panel pixel proj glow-cyan">
+    <div class="strip strip-teal"><span>NAVAL PROPULSION XAI</span><span>PREDICTIVE MAINTENANCE</span></div>
+    <div class="panel-in">
+      <p>A production-grade <b>multimodal pipeline</b> that fuses unstructured technician logs with structured
+      sensor telemetry to predict <b>Remaining Useful Life (RUL)</b> — and explains every single prediction.</p>
+      <ul>
+        <li>NLP semantic enricher with <b>spatial context awareness</b> ("port" vs "starboard") that maps log symptoms to the correct physical sensors.</li>
+        <li>Random Forest regressor for RUL — <b>R² = 0.996</b> on validation, beating naive linear heuristics.</li>
+        <li><b>SHAP-based explainability</b>: per-prediction diagnostic reports showing exactly which sensors drive health degradation.</li>
+      </ul>
+      <div class="tags"><span class="tag">PYTHON</span><span class="tag t2">SCIKIT-LEARN</span><span class="tag t4">SHAP-XAI</span><span class="tag t3">NLP FUSION</span></div>
+      <div class="btn-row">
+        <a class="btn btn-mustard" href="https://github.com/DoctorDisco23/Predictive_Maintenance_Model" target="_blank">SOURCE CODE</a>
+        <a class="btn btn-paper" href="https://doctordisco23.github.io/Predictive_Maintenance_Model/" target="_blank">LIVE DOCS</a>
+      </div>
+    </div>
+  </div></div>
+
+  <!-- ============ EXPERIENCE ============ -->
+  <header class="issue" id="xp"><span class="issue-tag">ISSUE #03</span><h2>EXPERIENCE</h2></header>
+  <div class="drop reveal"><div class="panel pixel xp">
+    <div class="strip strip-mustard"><span>FACEIFY LABS — SWE & PRODUCT INTERN</span><span>FEB–JUN 2026</span></div>
+    <div class="panel-in">
+      <p>Led QA & validation for <b>85 AI simulator modules</b>, ran user research with surgeons and clinics,
+      and built investor pitch decks translating complex features into compelling value propositions in a
+      high-growth startup.</p>
+    </div>
+  </div></div>
+
+  <!-- ============ SKILLS ============ -->
+  <header class="issue" id="skills"><span class="issue-tag">ISSUE #04</span><h2>SKILL TREE</h2></header>
+  <div class="skill-grid reveal">
+    <div class="skill-box sb-red"><h3>LANGUAGES</h3><div class="tags"><span class="tag">PYTHON</span><span class="tag">C++</span></div></div>
+    <div class="skill-box sb-teal"><h3>VISION & DATA</h3><div class="tags"><span class="tag t2">OPENCV</span><span class="tag t2">PANDAS</span><span class="tag t2">NUMPY</span><span class="tag t2">SCIKIT-LEARN</span><span class="tag t2">SHAP</span></div></div>
+    <div class="skill-box sb-mus"><h3>WEB</h3><div class="tags"><span class="tag">REACT.JS</span><span class="tag">TAILWIND</span></div></div>
+    <div class="skill-box sb-blu"><h3>EE TOOLKIT</h3><div class="tags"><span class="tag t4">MATLAB</span><span class="tag t4">KICAD</span><span class="tag t4">LTSPICE</span><span class="tag t4">COMSOL</span></div></div>
+  </div>
+
+  <!-- ============ DEVLOG ============ -->
+  <header class="issue" id="devlog"><span class="issue-tag">ISSUE #05</span><h2>DEVLOG</h2></header>
+  <div class="drop reveal"><div class="panel pixel blog"><div class="panel-in">
+    <div class="blog-post">
+      <span class="blog-date">AUG 17, 2026</span>
+      <h3 class="blog-title">Why I Built Drift-Sense Without Deep Learning</h3>
+      <p>Everyone reaches for PyTorch these days, but in semiconductor manufacturing, deterministic latency matters more than a 0.1% accuracy bump. Here's why classical CV (NCC + RANSAC) still rules the wafer fab...</p>
+    </div>
+    <div class="blog-post">
+      <span class="blog-date">JUL 28, 2026</span>
+      <h3 class="blog-title">Black-Box Models Don't Survive Safety-Critical Reviews</h3>
+      <p>An R² of 0.996 means nothing if the chief engineer can't ask "why?" — how SHAP turned my naval RUL model from a number-generator into an auditable diagnostic system...</p>
+    </div>
+  </div></div></div>
+
+  <!-- ============ CONTACT ============ -->
+  <header class="issue" id="contact"><span class="issue-tag">FINAL ISSUE</span><h2>CONTACT</h2></header>
+  <div class="drop reveal"><div class="panel pixel contact glow-fire"><div class="panel-in">
+    <h2>GOT A QUEST FOR ME?</h2>
+    <p>Internships, collabs, research, or a good technical argument — my inbox is open. Send a transmission and I'll respond faster than a buck converter.</p>
+    <div class="btn-row" style="justify-content:center">
+      <a class="btn btn-mustard" href="mailto:gargshubh2373@gmail.com" style="color: var(--ink-dark);">SEND TRANSMISSION</a>
+      <a class="btn btn-paper" href="https://github.com/DoctorDisco23" target="_blank" style="color: var(--ink);">GITHUB</a>
+    </div>
+  </div></div></div>
+
+</main>
+
+<footer>
+  <div class="press">PRESS START TO CONTINUE <span class="cursor"></span></div>
+  <small>© 2026 SHUBH GARG · Hand-built with pure HTML/CSS · No frameworks were harmed</small>
+</footer>
+
+<script>
+  // Typewriter
+  const ROLES=["ELECTRICAL ENGINEERING @ VJTI","COMPUTER VISION TINKERER","EXPLAINABLE-ML BUILDER","SIGNAL & SYSTEMS NERD"];
+  const el=document.getElementById("typed");let ri=0,ci=0,del=false;
+  (function tick(){
+    const word=ROLES[ri];
+    el.textContent=word.slice(0,ci);
+    if(!del&&ci<word.length){ci++;setTimeout(tick,70);}
+    else if(!del){del=true;setTimeout(tick,1600);}
+    else if(ci>0){ci--;setTimeout(tick,35);}
+    else{del=false;ri=(ri+1)%ROLES.length;setTimeout(tick,300);}
+  })();
+  // Scroll reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add("in")),{threshold:.12});
+  document.querySelectorAll(".reveal").forEach(n=>io.observe(n));
+  // Theme toggle
+  const themeBtn=document.getElementById('theme-btn'),themeIcon=document.getElementById('theme-icon'),themeText=document.getElementById('theme-text'),htmlEl=document.documentElement;
+  let currentTheme=localStorage.getItem('theme')||'night';
+  htmlEl.setAttribute('data-theme',currentTheme);updateToggleUI(currentTheme);
+  themeBtn.addEventListener('click',()=>{currentTheme=currentTheme==='night'?'day':'night';htmlEl.setAttribute('data-theme',currentTheme);localStorage.setItem('theme',currentTheme);updateToggleUI(currentTheme);});
+  function updateToggleUI(t){if(t==='night'){themeIcon.textContent='☀️';themeText.textContent='DAY';}else{themeIcon.textContent='🌙';themeText.textContent='NIGHT';}}
+</script>
+</body>
+</html>
