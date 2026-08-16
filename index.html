@@ -30,6 +30,9 @@
     --noise-opacity: 0.06;
     --scanline-opacity: 0.15;
     --glow-spread: 12px;
+    /* Permanent dark bands (readable in both themes) */
+    --band-bg: #0B0B12;
+    --band-text: #F6EFDF;
   }
   [data-theme="day"] {
     --bg-base: #F6EFDF;
@@ -72,7 +75,8 @@
   .glow-cyan { box-shadow: 0 0 var(--glow-spread) var(--fire-cyan), 8px 8px 0 var(--ink-dark); }
   .wrap { max-width: 1060px; margin: 0 auto; padding: 0 20px; }
 
-  .ticker { background: var(--ink-dark); color: var(--ink); overflow: hidden; border-bottom: 4px solid var(--ink-dark); }
+  /* Ticker: hardcoded dark band so it reads in BOTH themes */
+  .ticker { background: var(--band-bg); color: var(--band-text); overflow: hidden; border-bottom: 4px solid var(--band-bg); }
   .ticker-track { display: flex; width: max-content; animation: scroll 22s linear infinite; }
   .ticker span { font-family: 'Press Start 2P'; font-size: 10px; padding: 10px 0; white-space: nowrap; }
   .ticker b { color: var(--mustard); } .ticker i { color: var(--poppy); font-style: normal; }
@@ -93,14 +97,31 @@
   .theme-toggle { display: flex; align-items: center; gap: 6px; }
 
   .hero { display: grid; grid-template-columns: minmax(240px, 340px) 1fr; gap: 48px; align-items: center; padding: 72px 0 56px; }
-  .avatar-box { position: relative; }
+  .avatar-box { position: relative; cursor: pointer; user-select: none; }
   .frame { background: var(--ink-dark); padding: 8px; }
   .frame img { display: block; width: 100%; }
+  /* Mario ?-block boing */
+  .avatar-box.boing { animation: boing .55s cubic-bezier(.28,.84,.42,1); }
+  @keyframes boing {
+    0% { transform: translateY(0) scale(1,1); }
+    25% { transform: translateY(-26px) scale(1.04,.96); }
+    50% { transform: translateY(0) scale(.96,1.04); }
+    68% { transform: translateY(-10px) scale(1.01,.99); }
+    84% { transform: translateY(0) scale(.99,1.01); }
+    100% { transform: translateY(0) scale(1,1); }
+  }
+  .coin { position: absolute; top: -14px; left: 50%; font-size: 28px; pointer-events: none; z-index: 5; animation: coin .7s ease-out forwards; }
+  @keyframes coin {
+    0% { opacity: 0; transform: translate(-50%, 0) scale(.6); }
+    15% { opacity: 1; }
+    100% { opacity: 0; transform: translate(-50%, -80px) scale(1.1); }
+  }
   .pow { position: absolute; top: -26px; right: -18px; transform: rotate(8deg); background: var(--poppy); color: #fff; font-family: 'Bangers'; font-size: 26px; letter-spacing: 2px; padding: 8px 16px; border: 4px solid var(--ink-dark); box-shadow: 5px 5px 0 var(--ink-dark); }
   .bubble { position: relative; display: inline-block; background: var(--paper); border: 4px solid var(--ink-dark); padding: 10px 18px; font-family: 'Bangers'; font-size: 22px; letter-spacing: 1.5px; margin-bottom: 20px; box-shadow: 5px 5px 0 var(--ink-dark); }
   .bubble::after { content: ""; position: absolute; left: 34px; bottom: -22px; width: 10px; height: 10px; background: var(--ink-dark); box-shadow: 10px -10px 0 var(--ink-dark), 10px 0 0 var(--ink-dark); }
   h1 { font-family: 'Press Start 2P'; font-size: clamp(22px, 4.2vw, 42px); line-height: 1.35; margin: 14px 0 10px; text-shadow: 4px 4px 0 var(--ink-dark); }
   h1 .red { color: var(--poppy); } h1 .teal { color: var(--teal); }
+  .ast { font-size: .5em; vertical-align: super; line-height: 0; }
   .fnote { font-family: 'Press Start 2P'; font-size: 9px; color: var(--poppy); margin: 0 0 16px; }
   .type-line { font-family: 'Press Start 2P'; font-size: clamp(9px, 1.4vw, 12px); color: var(--teal); min-height: 2.4em; text-shadow: 0 0 8px var(--teal); }
   .cursor { display: inline-block; background: var(--poppy); width: .6em; height: 1em; vertical-align: -2px; animation: blink 1s steps(1) infinite; box-shadow: 0 0 8px var(--poppy); }
@@ -149,9 +170,9 @@
   .contact h2 { font-family: 'Bangers'; font-size: clamp(34px, 6vw, 60px); letter-spacing: 3px; text-shadow: 4px 4px 0 var(--ink-dark); color: #fff; margin-bottom: 10px; }
   .contact p { margin: 14px auto 30px; max-width: 52ch; }
 
-  footer { background: var(--ink-dark); color: var(--ink); text-align: center; padding: 34px 20px; margin-top: 80px; border-top: 4px solid var(--ink-dark); }
-  footer .press { font-family: 'Press Start 2P'; font-size: 10px; color: var(--mustard); }
-  footer small { display: block; margin-top: 14px; font-size: 12px; opacity: .75; }
+  /* Footer: hardcoded dark band, readable in both themes */
+  footer { background: var(--band-bg); color: var(--band-text); text-align: center; padding: 34px 20px; margin-top: 80px; border-top: 4px solid var(--band-bg); }
+  footer small { display: block; font-size: 12px; opacity: .75; }
 
   .reveal { opacity: 0; transform: translateY(22px); }
   .reveal.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; }
@@ -191,13 +212,13 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero">
-    <div class="avatar-box drop">
+    <div class="avatar-box drop" id="avatar" title="boing!">
       <div class="frame pixel glow-cyan"><img src="avatar.png" alt="Pixel-art portrait of Shubh Garg"></div>
       <div class="pow glow-fire">HI!</div>
     </div>
     <div>
       <div class="bubble">HI, I'M SHUBH — WELCOME TO MY PANEL!</div>
-      <h1>SHUBH <span class="red">GARG</span><br><span class="teal">BUILDS*</span> COOL THINGS</h1>
+      <h1>SHUBH <span class="red">GARG</span><br><span class="teal">BUILDS<span class="ast">*</span></span> COOL THINGS</h1>
       <div class="fnote">*tries to.</div>
       <div class="type-line">&gt; <span id="typed"></span><span class="cursor"></span></div>
       <p class="bio">Electrical Engineering undergrad at <b>VJTI, Mumbai</b>, working the gap between physical
@@ -207,7 +228,7 @@
       <div class="btn-row">
         <a class="btn btn-mustard glow-fire" href="https://github.com/DoctorDisco23" target="_blank">GITHUB</a>
         <a class="btn btn-teal glow-cyan" href="https://www.linkedin.com/in/shubh-garg-85a089318/" target="_blank">LINKEDIN</a>
-        <a class="btn btn-red" href="mailto:gargshubh2373@gmail.com">EMAIL ME</a>
+        <a class="btn btn-red" href="https://mail.google.com/mail/?view=cm&fs=1&to=gargshubh2373@gmail.com&su=Portfolio%20Inquiry%20-%20Shubh%20Garg" target="_blank">EMAIL ME</a>
       </div>
     </div>
   </section>
@@ -223,7 +244,7 @@
       <div class="fact"><b>BASE</b>Mumbai, India 🇮🇳</div>
       <div class="fact"><b>GUILD</b>VJTI · EE '28</div>
       <div class="fact"><b>CLASS</b>Computer Vision + Signal Processing</div>
-      <div class="fact"><b>THIS SEM</b>PSA · Power Electronics · MPMC · Control Systems</div>
+      <div class="fact"><b>EMAIL</b>gargshubh2373@gmail.com</div>
     </div>
   </div></div></div>
 
@@ -273,9 +294,9 @@
   <div class="drop reveal"><div class="panel pixel xp">
     <div class="strip strip-mustard"><span>FACEIFY LABS — SWE & PRODUCT INTERN</span><span>FEB–JUN 2026</span></div>
     <div class="panel-in">
-      <p>Led QA & validation for <b>85 AI simulator modules</b>, ran user research with surgeons and clinics,
-      and built investor pitch decks translating complex features into compelling value propositions in a
-      high-growth startup.</p>
+      <p>Led QA & validation for <b>numerous flagship AI simulator modules</b>, ran user research with surgeons
+      and clinics, and built investor pitch decks translating complex features into compelling value
+      propositions in a high-growth startup.</p>
     </div>
   </div></div>
 
@@ -309,7 +330,7 @@
     <h2>GOT A QUEST FOR ME?</h2>
     <p>Internships, collabs, research, or a good technical argument — my inbox is open. Send a transmission and I'll respond faster than a buck converter.</p>
     <div class="btn-row" style="justify-content:center">
-      <a class="btn btn-mustard" href="mailto:gargshubh2373@gmail.com" style="color: var(--ink-dark);">SEND TRANSMISSION</a>
+      <a class="btn btn-mustard" href="https://mail.google.com/mail/?view=cm&fs=1&to=gargshubh2373@gmail.com&su=Portfolio%20Inquiry%20-%20Shubh%20Garg" target="_blank" style="color: var(--ink-dark);">SEND TRANSMISSION</a>
       <a class="btn btn-paper" href="https://github.com/DoctorDisco23" target="_blank" style="color: var(--ink);">GITHUB</a>
     </div>
   </div></div></div>
@@ -317,7 +338,6 @@
 </main>
 
 <footer>
-  <div class="press">PRESS START TO CONTINUE <span class="cursor"></span></div>
   <small>© 2026 SHUBH GARG · Hand-built with pure HTML/CSS · No frameworks were harmed</small>
 </footer>
 
@@ -342,6 +362,13 @@
   htmlEl.setAttribute('data-theme',currentTheme);updateToggleUI(currentTheme);
   themeBtn.addEventListener('click',()=>{currentTheme=currentTheme==='night'?'day':'night';htmlEl.setAttribute('data-theme',currentTheme);localStorage.setItem('theme',currentTheme);updateToggleUI(currentTheme);});
   function updateToggleUI(t){if(t==='night'){themeIcon.textContent='☀️';themeText.textContent='DAY';}else{themeIcon.textContent='🌙';themeText.textContent='NIGHT';}}
+  // Mario ?-block avatar boing + coin pop
+  const avatar=document.getElementById('avatar');
+  avatar.addEventListener('click',()=>{
+    avatar.classList.remove('boing');void avatar.offsetWidth;avatar.classList.add('boing');
+    const c=document.createElement('span');c.className='coin';c.textContent='⚡';
+    avatar.appendChild(c);setTimeout(()=>c.remove(),700);
+  });
 </script>
 </body>
 </html>
